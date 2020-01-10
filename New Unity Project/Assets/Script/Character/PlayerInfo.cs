@@ -8,10 +8,10 @@ public class PlayerInfo : CharacterInfo
     {
         if (collision.tag == "Monster") SetTarget(collision.gameObject.GetComponent<CharacterInfo>());
     }
-
+    
     public override void Run()
     {
         base.Run();
-        while (targetList.Count == 0) transform.Translate(Vector3.right * walkSpeed * Time.deltaTime);
+        transform.Translate(Vector3.right * walkSpeed * Time.deltaTime);
     }
 }

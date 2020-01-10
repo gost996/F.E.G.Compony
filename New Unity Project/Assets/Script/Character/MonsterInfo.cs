@@ -12,6 +12,6 @@ public class MonsterInfo : CharacterInfo
     public override void Run()
     {
         base.Run();
-        while(targetList.Count == 0) transform.Translate(Vector3.left * walkSpeed * Time.deltaTime);
+        transform.Translate(Vector3.left * walkSpeed * Time.deltaTime);
     }
 }

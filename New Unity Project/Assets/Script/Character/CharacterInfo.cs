@@ -4,28 +4,28 @@ using UnityEngine;
 
 public class CharacterInfo : MonoBehaviour
 {
+    [Header("Spec")]
     public int hp;
     public int damage;
     public float walkSpeed;
     public float attackSpeed;
 
+    [Header("InitSpec")]
     Transform initTransform;
     int initHp;
     int initDamage;
     float initWalkSpeed;
     float initAttackSpeed;
-
-    Animator anim;
-
-    protected List<CharacterInfo> targetList = new List<CharacterInfo>();
-    CharacterInfo currentTarget = null;
-
-    private void Start()
-    {
-        anim = GetComponent<Animator>();
-        Run();
-    }
     
+    public Animator anim;
+    public List<CharacterInfo> targetList = new List<CharacterInfo>();
+    CharacterInfo currentTarget = null;
+    
+    private void Update()
+    {
+        if(targetList.Count == 0) Run();
+    }
+
     public void SetTarget(CharacterInfo _target)
     {
         targetList.Add(_target);
@@ -33,13 +33,16 @@ public class CharacterInfo : MonoBehaviour
         if (currentTarget == null)
         {
             currentTarget = targetList[0];
-            StartCoroutine(Attack());
+            Attack();
         }
     }
 
     void FindTarget()
     {
-        if (targetList.Count == 0) return;
+        if (targetList.Count == 0)
+        {
+            return;
+        }
         else
         {
             currentTarget = targetList[0];
@@ -47,38 +50,33 @@ public class CharacterInfo : MonoBehaviour
         }
     }
 
-    public IEnumerator Attack()
+    public void CalculateDamage()
     {
-        anim.SetTrigger("Attack");
+        currentTarget.hp -= damage;
 
-        while(currentTarget.hp > 0)
+        if(currentTarget.hp <= 0)
         {
-            currentTarget.hp -= damage;
-            yield return new WaitForSeconds(attackSpeed);
+            currentTarget.anim.SetTrigger("Death");
+            currentTarget.StopAllCoroutines();
+
+            currentTarget = null;
+            targetList.RemoveAt(0);
+
+            FindTarget();
         }
+    }
 
-        currentTarget.anim.SetTrigger("Death");
-        StopCoroutine(currentTarget.Attack());
-
-        currentTarget = null;
-        targetList.RemoveAt(0);
-        Debug.Log(targetList[0]);
-
-        FindTarget();
+    public void Attack()
+    {
+        SetAnimParameter("Attack");
+        anim.SetFloat("AttackSpd", attackSpeed);
     }
 
     public virtual void Run()
     {
-        anim.SetBool("Run", true);
-        anim.SetBool("Idle", false);
-        anim.SetBool("CombatIdle", false);
+        SetAnimParameter("Run");
     }
-
-    public virtual void Die()
-    {
-        GetComponent<BoxCollider2D>().enabled = false;
-    }
-
+    
     public virtual void SetInitInfo()
     {
         initTransform = transform;
@@ -92,15 +90,20 @@ public class CharacterInfo : MonoBehaviour
     {
         if(targetList.Count == 0)
         {
-            anim.SetBool("Run", false);
-            anim.SetBool("Idle", true);
-            anim.SetBool("CombatIdle", false);
+            SetAnimParameter("Idle");
         }
         else
         {
-            anim.SetBool("Run", false);
-            anim.SetBool("Idle", false);
-            anim.SetBool("CombatIdle", true);
+            SetAnimParameter("CombatIdle");
         }
+    }
+
+    void SetAnimParameter(string prmtName)
+    {
+        foreach(AnimatorControllerParameter prmt in anim.parameters)
+        {
+            if (prmt.name != "Death") anim.SetBool(prmt.name, false);
+        }
+        anim.SetBool(prmtName, true);
     }
 }
