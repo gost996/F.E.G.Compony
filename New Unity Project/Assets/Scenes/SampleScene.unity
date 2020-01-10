@@ -1789,6 +1789,38 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1457913297}
   m_CullTransparentMesh: 0
+--- !u!1 &1686604690 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1776364521419491766, guid: 68adaf09b36476f408a53d9ec66bc52b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1776364521511783496}
+  m_PrefabAsset: {fileID: 0}
+--- !u!61 &1686604691
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1686604690}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.6, y: 1.6}
+    newSize: {x: 0.16, y: 0.16}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.6, y: 1.6}
+  m_EdgeRadius: 0
 --- !u!1 &1765708064
 GameObject:
   m_ObjectHideFlags: 0
@@ -2170,6 +2202,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slime_0
       objectReference: {fileID: 0}
+    - target: {fileID: 1776364521419491766, guid: 68adaf09b36476f408a53d9ec66bc52b,
+        type: 3}
+      propertyPath: m_TagString
+      value: Monster
+      objectReference: {fileID: 0}
+    - target: {fileID: 1776364521419491767, guid: 68adaf09b36476f408a53d9ec66bc52b,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 996654c6a076ab842b4f6f1b426cafea, type: 2}
     - target: {fileID: 1776364521419491913, guid: 68adaf09b36476f408a53d9ec66bc52b,
         type: 3}
       propertyPath: m_LocalPosition.x

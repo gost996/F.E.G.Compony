@@ -4,20 +4,14 @@ using UnityEngine;
 
 public class PlayerInfo : CharacterInfo
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        walkSpeed = 5f;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if (collision.tag == "Monster") SetTarget(collision.gameObject.GetComponent<CharacterInfo>());
+    }
+
+    public override void Run()
+    {
+        base.Run();
+        while (targetList.Count == 0) transform.Translate(Vector3.right * walkSpeed * Time.deltaTime);
     }
 }

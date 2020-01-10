@@ -65,6 +65,7 @@
     <Compile Include="Assets\Asset_Imported\FreePixelMob\Mobs.cs" />
     <Compile Include="Assets\Asset_Imported\FreePixelMob\StateRandom.cs" />
     <Compile Include="Assets\Script\Character\CharacterInfo.cs" />
+    <Compile Include="Assets\Script\Character\MonsterInfo.cs" />
     <Compile Include="Assets\Script\Character\PlayerInfo.cs" />
     <None Include="Assets\Asset_Imported\FreePixelMob\ReadMe.txt" />
     <None Include="Assets\Asset_Imported\Pixel Font - Tripfive\_README.txt" />
