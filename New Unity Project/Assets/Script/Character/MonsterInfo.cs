@@ -9,9 +9,13 @@ public class MonsterInfo : CharacterInfo
         if (collision.tag == "Player") SetTarget(collision.gameObject.GetComponent<CharacterInfo>());
     }
 
-    public override void Run()
+    public override IEnumerator Run()
     {
-        base.Run();
-        transform.Translate(Vector3.left * walkSpeed * Time.deltaTime);
+        SetAnimParameter("IsRun");
+        while (targetList.Count == 0)
+        {
+            transform.Translate(Vector3.left * walkSpeed * Time.deltaTime);
+            yield return new WaitForEndOfFrame();
+        }
     }
 }

@@ -9,23 +9,27 @@ public class CharacterInfo : MonoBehaviour
     public int damage;
     public float walkSpeed;
     public float attackSpeed;
+    public float animSpeed = 1f;
 
     [Header("InitSpec")]
-    Transform initTransform;
-    int initHp;
-    int initDamage;
-    float initWalkSpeed;
-    float initAttackSpeed;
-    
+    public Vector3 initPos;
+    public int initHp;
+    public int initDamage;
+    public float initWalkSpeed;
+    public float initAttackSpeed;
+    public float initAnimSpeed;
+
     public Animator anim;
     public List<CharacterInfo> targetList = new List<CharacterInfo>();
-    CharacterInfo currentTarget = null;
+    public CharacterInfo currentTarget = null;
     
-    private void Update()
+    private void Start()
     {
-        if(targetList.Count == 0) Run();
+        anim.SetFloat("AttackSpd", attackSpeed);
+        anim.SetFloat("AnimSpd", animSpeed);
+      // StartCoroutine(Run());
     }
-
+    
     public void SetTarget(CharacterInfo _target)
     {
         targetList.Add(_target);
@@ -41,7 +45,7 @@ public class CharacterInfo : MonoBehaviour
     {
         if (targetList.Count == 0)
         {
-            return;
+            AnimationIdle();
         }
         else
         {
@@ -52,11 +56,13 @@ public class CharacterInfo : MonoBehaviour
 
     public void CalculateDamage()
     {
+        if (currentTarget == null) return;
+
         currentTarget.hp -= damage;
 
         if(currentTarget.hp <= 0)
         {
-            currentTarget.anim.SetTrigger("Death");
+            currentTarget.anim.SetBool("IsDead", true);
             currentTarget.StopAllCoroutines();
 
             currentTarget = null;
@@ -68,42 +74,44 @@ public class CharacterInfo : MonoBehaviour
 
     public void Attack()
     {
-        SetAnimParameter("Attack");
+        SetAnimParameter("IsAttack");
         anim.SetFloat("AttackSpd", attackSpeed);
     }
 
-    public virtual void Run()
+    public virtual IEnumerator Run()
     {
-        SetAnimParameter("Run");
+        yield return null;
     }
     
     public virtual void SetInitInfo()
     {
-        initTransform = transform;
+        initPos = transform.position;
         initHp = hp;
         initDamage = damage;
         initWalkSpeed = walkSpeed;
         initAttackSpeed = attackSpeed;
+        initAnimSpeed = animSpeed;
     }
-    
-    void AnimationIdle()
+
+    public void AnimationIdle()
     {
         if(targetList.Count == 0)
         {
-            SetAnimParameter("Idle");
+            SetAnimParameter("IsIdle");
         }
         else
         {
-            SetAnimParameter("CombatIdle");
+            SetAnimParameter("IsCombatIdle");
         }
     }
 
-    void SetAnimParameter(string prmtName)
+    public void SetAnimParameter(string prmtName)
     {
         foreach(AnimatorControllerParameter prmt in anim.parameters)
         {
-            if (prmt.name != "Death") anim.SetBool(prmt.name, false);
+            if (prmt.name.Contains("Is")) anim.SetBool(prmt.name, false);
         }
         anim.SetBool(prmtName, true);
     }
+
 }
