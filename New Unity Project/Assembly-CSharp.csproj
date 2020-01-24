@@ -68,6 +68,8 @@
     <Compile Include="Assets\Script\Character\MonsterInfo.cs" />
     <Compile Include="Assets\Script\Character\PlayerInfo.cs" />
     <Compile Include="Assets\Script\GameManager.cs" />
+    <Compile Include="Assets\Script\Stage\Stage.cs" />
+    <Compile Include="Assets\Script\Stage\TextBox.cs" />
     <Compile Include="Assets\Script\UI\LineManager.cs" />
     <None Include="Assets\Asset_Imported\FreePixelMob\ReadMe.txt" />
     <None Include="Assets\Asset_Imported\Pixel Font - Tripfive\_README.txt" />
